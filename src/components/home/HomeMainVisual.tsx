@@ -10,15 +10,19 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 import "swiper/css/effect-fade";
+import ScrollIndicator from "../common/ScrollIndicator";
 
 const SLIDE_MS = 5000;
 
 export default function HomeMainVisual() {
-  const slides = useMemo(() => [
-    { id: "01", bg: "/assets/images/main_v_first.jpg" },
-    { id: "02", bg: "/assets/images/main_v_second.jpg" },
-    { id: "03", bg: "/assets/images/main_v_third.jpg" },
-  ], []);
+  const slides = useMemo(
+    () => [
+      { id: "01", bg: "/assets/images/main_v_first.jpg" },
+      { id: "02", bg: "/assets/images/main_v_second.jpg" },
+      { id: "03", bg: "/assets/images/main_v_third.jpg" },
+    ],
+    []
+  );
 
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -56,12 +60,7 @@ export default function HomeMainVisual() {
           </SwiperSlide>
         ))}
       </StyledSwiper>
-
-      <Overlay
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
+      <Overlay variants={containerVariants} initial="hidden" animate="visible">
         <Inner>
           <TextArea>
             <motion.div className="label_wrap" variants={itemVariants}>
@@ -73,11 +72,13 @@ export default function HomeMainVisual() {
               BLISSFULNESS
             </motion.h2>
           </TextArea>
-          
+
           <RightContent>
             <motion.p className="intro" variants={itemVariants}>
-              何気ない日常に、ワンランク上の<br />
-              特別な空間と、幸福な時間を<br />
+              何気ない日常に、ワンランク上の
+              <br />
+              特別な空間と、幸福な時間を
+              <br />
               彩るアイテムを提案いたします.
             </motion.p>
           </RightContent>
@@ -88,28 +89,24 @@ export default function HomeMainVisual() {
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
         >
-          <span className="current">{String(activeIndex + 1).padStart(2, "0")}</span>
+          <span className="current">
+            {String(activeIndex + 1).padStart(2, "0")}
+          </span>
           <div className="bar_base">
-             <div className="bar_fill" style={{ width: `${((activeIndex + 1) / slides.length) * 100}%` }} />
+            <div
+              className="bar_fill"
+              style={{ width: `${((activeIndex + 1) / slides.length) * 100}%` }}
+            />
           </div>
-          <span className="total">{String(slides.length).padStart(2, "0")}</span>
+          <span className="total">
+            {String(slides.length).padStart(2, "0")}
+          </span>
         </Indicator>
-
-        {/* 중앙 마우스 스크롤 가이드 */}
-        <CentralScrollGuide
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.8, duration: 1 }}
-        >
-          <div className="mouse">
-            <div className="wheel"></div>
-          </div>
-          <div className="arrow_box">
-            <span className="arrow_down"></span>
-          </div>
-          <p className="text">SCROLL DOWN</p>
-        </CentralScrollGuide>
       </Overlay>
+      {/* 하단 스크롤 유도 아이콘 */}
+      <CentralScrollGuide>
+        <ScrollIndicator delay={1.2} bottom={50} theme="dark" />
+      </CentralScrollGuide>
     </Section>
   );
 }
@@ -161,7 +158,11 @@ const Overlay = styled(motion.div)`
   position: absolute;
   inset: 0;
   z-index: 10;
-  background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.4) 100%);
+  background: radial-gradient(
+    circle at center,
+    transparent 0%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -190,8 +191,16 @@ const TextArea = styled.div`
     align-items: center;
     gap: 12px;
     margin-bottom: 25px;
-    .line { width: 35px; height: 1px; background: #fff; }
-    .label { font-size: 13px; letter-spacing: 0.3em; font-weight: 500; }
+    .line {
+      width: 35px;
+      height: 1px;
+      background: #fff;
+    }
+    .label {
+      font-size: 13px;
+      letter-spacing: 0.3em;
+      font-weight: 500;
+    }
   }
   .catch {
     font-size: 5.5rem;
@@ -199,13 +208,21 @@ const TextArea = styled.div`
     line-height: 1.05;
     letter-spacing: -0.02em;
     margin: 0;
-    .amp { font-weight: 300; font-size: 3rem; opacity: 0.6; }
+    .amp {
+      font-weight: 300;
+      font-size: 3rem;
+      opacity: 0.6;
+    }
   }
   @media (max-width: 1500px) {
-    .catch { font-size: 3rem; }
+    .catch {
+      font-size: 3rem;
+    }
   }
   @media (max-width: 768px) {
-    .catch { font-size: 2.5rem; }
+    .catch {
+      font-size: 2.5rem;
+    }
   }
 `;
 
@@ -221,7 +238,9 @@ const RightContent = styled.div`
     margin: 0;
   }
   @media (max-width: 900px) {
-    .intro { text-align: left; }
+    .intro {
+      text-align: left;
+    }
   }
 `;
 
@@ -240,60 +259,22 @@ const Indicator = styled(motion.div)`
     position: relative;
     .bar_fill {
       position: absolute;
-      left: 0; top: 0; height: 100%;
+      left: 0;
+      top: 0;
+      height: 100%;
       background: #fff;
       transition: width 0.6s ease;
     }
   }
-  .current, .total { font-size: 12px; letter-spacing: 0.1em; font-weight: 600; }
+  .current,
+  .total {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+  }
 `;
 
 const CentralScrollGuide = styled(motion.div)`
   position: absolute;
-  bottom: 30px;
   left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  color: #fff;
-
-  .mouse {
-    width: 24px;
-    height: 38px;
-    border: 2px solid rgba(255, 255, 255, 0.6);
-    border-radius: 12px;
-    position: relative;
-    .wheel {
-      width: 4px;
-      height: 4px;
-      background: #fff;
-      border-radius: 50%;
-      position: absolute;
-      top: 6px;
-      left: 50%;
-      margin-left: -2px;
-      animation: ${wheelAnim} 1.6s ease-out infinite;
-    }
-  }
-
-  .arrow_box {
-    .arrow_down {
-      display: block;
-      width: 10px;
-      height: 10px;
-      border-right: 2px solid #fff;
-      border-bottom: 2px solid #fff;
-      transform: rotate(45deg);
-      animation: ${arrowAnim} 1.6s ease-out infinite;
-    }
-  }
-
-  .text {
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    opacity: 0.6;
-    font-weight: 600;
-  }
 `;

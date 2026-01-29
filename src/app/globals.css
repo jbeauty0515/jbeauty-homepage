@@ -1,34 +1,38 @@
- 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif;
+  font-family: "Noto Sans JP", sans-serif;
 }
-html{
-	scroll-behavior: smooth;
+
+html {
+  scroll-behavior: smooth;
 }
+
 body {
   background: #f9f9f7;
   color: #444444;
   line-height: 1.6;
+  font-family: "Noto Sans JP", sans-serif;
 }
 
 a {
   color: inherit;
   text-decoration: none;
 }
-a:hover{
+
+a:hover {
   color: #4BB3C4;
   background-blend-mode: lighten;
 }
+
 ul {
   list-style: none;
 }
 
-p{
-font-family: 'Noto Sans JP', 'Helvetica Neue', sans-serif;
-font-size: 1.125rem;
+p {
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 1.125rem;
 }
 
 .pc_on{

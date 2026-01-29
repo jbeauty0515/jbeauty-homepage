@@ -220,7 +220,6 @@ const LeftColumn = styled.div`
 const DateText = styled.span`
   font-size: 14px;
   color: #999;
-  font-family: "Inter", sans-serif;
 `;
 
 const LabelPill = styled.span`
