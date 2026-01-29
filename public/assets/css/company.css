@@ -1,0 +1,674 @@
+.company-bg{
+    background-size: 100% 92.6%;
+    background-position: top;
+}
+
+
+.about-us-section {
+  padding: 10em 0 0;
+}
+
+.section-subtitle {
+  font-size: 18px;
+  text-align: center;
+  color: #4BB3C4;
+  margin-bottom: 16px;
+}
+
+.catchcopy {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 40px;
+}
+
+.about-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 100px;
+  max-width: 1440px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+
+
+.about-text {
+  flex: 1;
+  line-height: 1.8;
+  margin-top:0;
+}
+
+.about-text h3 {
+  font-size: 42px;
+  font-weight: 100;
+}
+
+
+.about-text p {
+line-height: 2.5;
+margin-top: 50px;
+margin-bottom: 0;
+}
+
+.about-visual {
+  flex: 1;
+}
+
+.blend-wrapper {
+  width: 100%;
+  max-width: 800px;
+  overflow: hidden;
+}
+
+.blend-img {
+  width: 100%;
+  height: auto;
+  mix-blend-mode: lighten; /* 또는 screen, overlay 등 실험 가능 */
+  opacity: 0.85; /* 부드럽게 투명하게 하고 싶다면 */
+}
+
+
+.about-visual.blend-wrapper{
+
+}
+
+
+
+
+.company-profile-section {
+  padding: 6rem;
+  margin: 0 auto;
+}
+
+
+
+.about_warp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7.5em;
+}
+
+
+
+.about_profile_warp {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 7.5em;
+  padding-top: 40px;
+}
+
+
+.about_profile_warp h2{
+  line-height: 1.2;
+}
+
+
+.about_profile_warp span{
+  text-align: left;
+  margin-top: 12px;
+}
+
+  .profile-list {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    row-gap: 0;
+    column-gap: 0;
+    font-size: 16px;
+    width: calc(100% - 40px);
+    max-width: 960px;
+    margin: 0 auto;
+    border-top: 1px solid #cccccc;
+  }
+
+
+.profile-list dt,
+.profile-list dd {
+  padding: 35px 0;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  align-items: center; /* 선의 중앙에 텍스트 정렬 */
+}
+
+
+
+
+.profile-list dt {
+  font-weight: bold;
+  color: #333;
+  padding-left: 30px;
+}
+
+.profile-list dd {
+  margin: 0;
+  color: #555;
+  line-height: 1.6;
+  padding-right: 30px;
+}
+
+.profile-item {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.profile-item.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+
+.company-bg {
+  background-size: 100% 85%;
+  background-position: top;
+}
+
+
+
+.access-section {
+  padding: 0 0 5%;
+  text-align: center;
+}
+
+
+.access_warp{
+  display: block;
+}
+
+.access-content{
+  width: 100%;
+  margin-top: 50px;
+}
+
+.access-map img {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 12px;
+}
+
+.access-info {
+  width:100%;
+  margin: 20px auto 0;
+  line-height: 1.6;
+  margin-top: 35px;
+}
+
+
+.access-map {
+  position: relative;
+  max-width: 100%;
+  height: 380px; /* ✅ 요걸로 조절 */
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+
+.access-map iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  filter: grayscale(0.5) brightness(1);
+  transition: filter 0.4s ease;
+  margin: 0;
+}
+
+
+/* 🟦 오버레이 컬러 덮기용 */
+/* .access-map .map-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: #4BB3C4;
+  mix-blend-mode: color;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+} */
+
+/* 🩵 마우스 올릴 때 부드럽게 overlay 등장 */
+.access-map:hover .map-overlay {
+  opacity: 0.3;
+}
+
+
+.access-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.8;
+  color: #333;
+}
+
+.access-list li {
+  margin-bottom: 15px;
+  text-align: center;
+  line-height: 1.4;
+}
+
+
+.access-list li:nth-last-child(1){
+  margin-bottom: 0;
+}
+
+
+
+.contents_wrap.partner_warp {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+
+
+.partner-section {
+  padding: 5% 0 5%;
+  text-align: center;
+}
+
+
+.partner-content {
+  background-color: #fff;
+  padding: 30px;
+}
+
+
+.partner-logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 1440px;
+}
+
+.partner-logos li {
+  flex: 1 1 240px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px; /* ✅ 고정 높이 박스 설정 (중간 높이 정도) */
+}
+
+.partner-logos li img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.partner-logos li img:hover {
+  /* transform: scale(1.05); */
+}
+
+
+
+/* ================================
+   개별 로고별 클래스 조정
+================================= */
+
+/* 01. Loft  */
+.logo-loft {
+  transform: scale(0.85);
+}
+
+/* 02. PLAZA  */
+.logo-plaza {
+  transform: scale(0.7);
+}
+
+/* 03. HANDS  */
+.logo-hands {
+  transform: scale(0.35);
+}
+
+/* 04. shop in */
+.logo-shopin {
+  transform: scale(0.85);
+}
+
+/* 05. @cosme */
+.logo-cosme {
+  transform: scale(1.3);
+}
+
+/* 06. AEON  */
+.logo-aeon {
+  transform: scale(0.55);
+}
+
+/* 07. matsukiyo */
+.logo-matsukiyo {
+  transform: scale(0.75);
+}
+
+/* 08. sugi */
+.logo-sugi {
+  max-height: 50px;
+  transform: scale(0.95);
+}
+
+/* 09. itoyokado */
+.logo-itoyokado {
+  transform: scale(0.85);
+}
+
+/* 10. donki */
+.logo-donki {
+  transform: scale(0.75);
+}
+
+/* 11. marui */
+.logo-marui {
+  transform: scale(0.5);
+}
+
+/* 12. TSUTAYA */
+.logo-tsutaya {
+  transform: scale(0.85);
+}
+
+/* 13. UNICO */
+.logo-unico {
+  transform: scale(1.1);
+}
+
+/* 14. studio CLIP */
+.logo-studioclip {
+  transform: scale(0.85);
+}
+
+/* 15. birthday bar */
+.logo-birthdaybar {
+  transform: scale(0.85);
+}
+
+
+
+
+
+/* 모바일 대응 */
+@media screen and (max-width: 768px) {
+  .partner-logos {
+    gap: 24px;
+  }
+
+  .partner-logos li {
+    flex: 1 1 40%;
+    height: 80px; /* 모바일에서는 박스 높이도 살짝 줄이기 */
+  }
+
+  .partner-logos li img {
+    max-height: 100%;
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .partner-logos li {
+    flex: 1 1 100%;
+    height: 70px;
+  }
+
+  .partner-logos li img {
+    max-height: 100%;
+  }
+}
+
+
+
+
+
+/* ✅ 반응형 대응 */
+@media (max-width: 640px) {
+
+  .company-bg {
+    background-size: 100% 92.4%;
+}
+
+  .profile-list {
+    grid-template-columns: 1fr;
+    width: calc(100% - 12px);
+  }
+
+
+  .profile-list dt {
+    background-color: #f8f8f8;
+    padding-left: 10px;
+  }
+
+  .profile-list dt, .profile-list dd {
+    padding: 18px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    text-align: left;
+} 
+
+dd.profile-item {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+dd.profile-item span{
+  padding-left: 0px !important;
+}
+
+
+
+  .about-us-section{
+    padding: 3.5rem 1.25rem 3rem;
+  }
+
+
+
+  .company-profile-section{
+    padding: 1.5rem 1.25rem 3rem;
+  }
+
+
+
+  .partner-section{
+    padding: 3rem 1.25rem 3rem;
+  }
+
+
+.about-content {
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+.about-text h3 {
+  font-size: 27px;
+  font-weight: 100;
+}
+
+.about-text p {
+
+  font-size: 1rem;
+  line-height: 2.3;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+
+.contents_wrap.about_profile_warp {
+  flex-direction: column;
+  gap: 3em;
+  padding-top: 0;
+}
+
+.company-profile-section{
+  text-align: center;
+}
+
+.about_profile_warp h2{
+  font-size: 2rem;
+    text-align: center;
+    width: 100%;
+}
+
+.about_profile_warp span{
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+
+.access-content{
+  margin-top: 0px !important;
+}
+
+
+.access-map {
+  padding: 20px;
+}
+
+.access-list{
+  font-size: 16px;
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.circle-wrap {
+  position: relative;
+  width: 700px;
+  height: 700px;
+  margin: 0 auto;
+}
+
+.circle {
+  position: absolute;
+  width: 47%;
+  height: 47%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  background-blend-mode: screen;
+  padding: 10px;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.circle-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px solid rgb(0 0 0 / 7%);
+  box-sizing: border-box;
+  z-index: 1;
+  transform: scale(1.1);
+}
+
+.circle-content {
+  position: relative;
+  z-index: 2;
+  color: white;
+  text-shadow: 0px 0px 11px rgba(0, 0, 0, 0.3);
+}
+
+.circle-number {
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.circle-title {
+  font-size: 19px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.circle-desc {
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+.circle-1 {
+  top: 20px;
+  left: 20px;
+  background: radial-gradient(circle, rgb(93 196 177) 0%, rgb(93 196 177 / 70%) 35%, rgb(26 188 156 / 4%) 70%);
+}
+
+.circle-2 {
+  top: 123px;
+  left: 323px;
+  background: radial-gradient(circle, rgb(250 131 131) 0%, rgb(250 131 131 / 70%) 35%, rgb(250 131 131 / 4%) 70%);
+}
+
+.circle-3 {
+  top: 330px;
+  left: 80px;
+  background: radial-gradient(circle, rgb(52 149 219) 0%, rgb(52 149 219 / 70%) 35%, rgb(52 149 219 / 4%) 70%);
+}
+
+
+
+@media screen and (max-width: 768px) {
+  .circle-wrap {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    display: none;
+  }
+
+  .circle {
+    position: relative;
+    top: auto;
+    left: auto;
+  }
+
+
+
+.logo-hands {
+    transform: scale(1.15);
+    width:100%;
+    height:auto;
+}
+
+
+}
+
+.circle {
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 480px) {
+  .circle {
+    width: 100%;
+    height: 100%;
+  }
+}

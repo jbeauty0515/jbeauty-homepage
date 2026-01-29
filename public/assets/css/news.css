@@ -1,0 +1,419 @@
+.news-bg{
+    background-size: 100% 88.5%;
+    background-position: top;
+}
+
+
+.news-section {
+  padding: 10em 0 6em;
+}
+
+.news-wrapper {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 0 0;
+}
+
+.news-title {
+  text-align: left;
+}
+
+.news-title .top-subtitle{
+  text-align: center;
+}
+
+.news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  margin-top: 35px;
+}
+
+.news-item {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  padding: 40px 0;
+  border-bottom: 1px solid #eee;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease;
+  transform: translateY(0);
+  position: relative;
+}
+
+.news-item::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.08);
+  transition: background-color 0.3s ease;
+}
+
+.news-item:hover {
+  transform: translateY(-3px);
+}
+
+.news-item:hover::after {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.news-date {
+  font-size: 20px;
+  color: #555555;
+  min-width: 100px;
+  padding-left: 15px;
+}
+
+.news-label {
+  font-size: 14px;
+  font-weight: 500;
+  background-color: #2C3E50;
+  color: white;
+  padding: 4px 18px;
+  border-radius: 50px;
+  transition: background-color 0.3s ease; 
+}
+
+
+
+.news-text-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* 수직 가운데 정렬 */
+  flex: 1;
+  gap: 20px;
+}
+
+
+.news-text {
+  font-size: 20px;
+  font-weight: 500;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.news-arrow .circle {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #2C3E50;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  margin-left: 12px;
+  background-color: transparent;
+  transform: translateX(-14px);
+}
+
+.news-arrow .arrow {
+  font-size: 15px;
+  color: #2C3E50;
+  transition: all 0.3s ease;
+}
+
+.news-item:hover .news-text {
+  color: #4BB3C4;
+  font-weight: 100;
+  letter-spacing: 0.3px;
+}
+
+.news-item:hover .news-label {
+  background-color: #4BB3C4;
+}
+
+.news-item:hover .news-date {
+  color: #333333;
+}
+
+.news-item:hover .circle {
+  transform: translateX(-2px);
+  border-color: #4BB3C4;
+}
+
+.news-item:hover .arrow {
+  color: #4BB3C4;
+}
+
+.news_btn_area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4rem;
+}
+
+.news_btn_area .btn-view-more {
+  margin-top: 0rem;
+}
+
+
+
+/* Pagination styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 40px;
+  font-size: 15px;
+}
+
+.pagination a {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  text-decoration: none;
+  color: #333;
+  transition: all 0.3s ease;
+  min-width: 36px;
+  text-align: center;
+}
+
+.pagination a:hover {
+  background-color: #4BB3C4;
+  color: #fff;
+  border-color: #4BB3C4;
+}
+
+.pagination .active {
+  background-color: #4BB3C4;
+  color: #fff;
+  border-color: #4BB3C4;
+}
+
+
+
+
+
+
+/* ----------- 詳細ページ　style start ----------------  */
+
+
+.news-detail-bg{
+  background-size: 100% 98%;
+  background-position: top;
+  }
+
+
+.news-detail-wrapper {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.news-detail .news-date {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.96rem;
+  color: #666666;
+  margin-bottom: 1em;
+  letter-spacing: 1px;
+  gap: 12px;
+  line-height: 1.5;
+}
+
+.news-detail .news-date::before {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 1.3px;
+  background-color: #4BB3C4;
+}
+
+
+.news-detail .news-title {
+    font-size: 2.05em;
+    margin-bottom: 0.6em;
+    line-height: 1.4;
+    padding: 40px 0 0;
+    font-weight: bold;
+    text-align: center;
+
+}
+
+
+
+.news-detail .news-body{
+    background-color: #fff;
+    padding: 3em 3em 1.8em;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px 0px #b5b5b557;
+}
+
+.news-detail .news-body p {
+  line-height: 1.8;
+  margin-bottom: 1.2em;
+
+}
+
+.news-detail .news-body ul {
+  margin-left: 1em;
+  padding-left: 1em;
+  list-style-type: disc;
+}
+
+.news-body ul li {
+    margin-bottom: 15px;
+}
+
+.back-to-news {
+  text-align: center;
+}
+
+
+.btn-back {
+    margin-top: 3.5rem;
+    padding: 15px 60px;
+    border-radius: 999px;
+}
+
+
+.btn-back:hover {
+    padding: 15px 60px;
+    border-radius: 999px;
+}
+
+
+.btn-view-more::before, .btn-contact::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 1px solid #4BB3C4;
+    border-radius: 30px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+    z-index: -1;
+    padding: 20px 60px;
+    border-radius: 999px;
+}
+
+
+/* ----------- 詳細ページ　style end ----------------  */
+
+
+
+
+
+
+@media (max-width: 680px) {
+
+
+.news-section{
+  padding: 3.5rem 1.25rem 4rem;
+}
+
+.news-list{
+  margin-top: 0;
+}
+
+
+.news-item {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 20px 0;
+  margin: 10px 0;
+}
+
+
+
+.news-item:nth-child(1) {
+  padding: 0 0 20px;
+}
+
+
+
+.news-date {
+  font-size: 0.95rem;
+  padding: 0;
+}
+
+
+.news-label {
+  font-size: 0.8rem;
+  padding: 4px 25px;
+
+}
+
+.news-text-wrap {
+  justify-content: space-between;
+  width: 100%;
+}
+
+.news-text {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.news-arrow {
+  position: static;
+  margin-top: 5px;
+  display: inline-block;
+}
+
+.news-arrow .circle {
+  width: 34px;
+  height: 34px;
+  transform: translateX(0px);
+}
+
+.news_btn_area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0rem;
+}
+
+
+.pagination{
+  font-size: 12px;
+}
+
+
+.news-detail-wrapper {
+    padding: 0;
+}
+
+
+.news-detail .news-title {
+  font-size: 1.5em;
+  font-weight: 100;
+  margin-bottom: 0.85em;
+  line-height: 1.4;
+  padding: 12px 0 0;
+  text-align: left;
+}
+
+
+
+.news-detail .news-body{
+  padding: 2em 2em 0.5em;
+
+}
+
+.news-detail .news-body p {
+  font-size:0.9rem;
+}
+
+.news-detail .news-body ul{
+  font-size:0.9rem;
+}
+
+
+
+.btn-back {
+  margin-top: 2.5rem;
+}
+
+
+}

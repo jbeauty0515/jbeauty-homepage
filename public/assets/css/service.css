@@ -1,0 +1,204 @@
+.service-bg{
+    background-size: 100% 94.3%;
+    background-position: top;
+}
+
+
+
+.select-brands {
+  padding: 10em 0 6em;
+}
+
+.service_wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+
+.category-title {
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-size: 2.2rem;
+  font-weight: 100;
+  width: 100%;
+  gap: 20px; /* 텍스트와 선 사이 간격 */
+  padding: 7rem 0 50px;
+}
+
+.category-title::after {
+  content: "";
+  flex-grow: 1;
+  height: 1px;
+  background-color: #e1e4e4;
+  margin-top:15px;
+}
+
+.brand-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 36px;
+  margin-bottom: 0px;
+}
+
+
+.organic-group {
+  margin-bottom: 0;
+}
+
+
+.brand-card {
+  background-color: #fff;
+  /* border: 1px solid #e0e0e0; */
+  border-radius: 4px;
+  padding: 34px;
+  width: calc(33.333% - 24px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.brand-card:hover {
+  transform: translateY(-5px);
+}
+
+.brand-card img {
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 15px;
+}
+
+.brand-name {
+  font-size: 1.7rem;
+  font-weight: 100;
+  margin-bottom: 15px;
+  font-family: 'Noto Sans JP', sans-serif;
+  text-align: center;
+}
+
+.brand-ja {
+  display: block;
+  font-size: 0.95rem;
+  color: #888;
+  font-weight: 400;
+}
+
+.brand-desc {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #444;
+  text-align: left;
+}
+
+
+
+.main-items {
+    font-size: 0.92rem;
+    color: #444;
+    margin-top: 1.5rem;
+    padding-left: 1.2rem;
+    position: relative;
+    line-height: 1.8;
+}
+
+.main-items::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 12px;
+    width: 0.8rem;
+    height: 2px;
+    background-color: #8bcbd5;
+    transform: rotate(90deg);
+}
+
+
+
+.btn_area{
+  text-align: center;
+}
+
+.btn_area .btn-view-more {
+  margin-top: 2.5rem;
+}
+
+
+
+
+.comingsoon{
+    position: relative;
+    display: inline-block;
+    padding: 10px 60px;
+    border: 1px solid #2c3e501a;
+    border-radius: 30px;
+    font-size: 1rem;
+    color: #2c3e5082;
+    /* font-weight: 100; */
+    letter-spacing: 0.5px;
+    background-color: #d4d4d447;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    z-index: 1;
+    margin-top: 2.5rem;
+}
+
+
+
+@media (max-width: 960px) {
+  .brand-card {
+    width: calc(50% - 15px);
+  }
+}
+
+@media (max-width: 600px) {
+  .brand-card {
+    width: 100%;
+  }
+
+  .select-brands{
+    padding: 3.5rem 1.25rem 4rem;
+  }
+
+  .category-title{
+    font-size: 1.7rem;
+    padding: 3rem 0 2rem;
+  }
+
+  .brand-name {
+    font-size: 1.4rem;
+
+  }
+
+  .brand-ja{
+    font-size: 0.85rem;
+  }
+
+  .brand-desc {
+    font-size: 0.9rem;
+    text-align: left;
+
+}
+
+.brand-grid {
+  gap: 36px;
+}
+
+
+.main-items {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  padding-left: 1rem;
+}
+
+.main-items::before {
+  top: 0.63rem;
+}
+
+    .btn-view-more, .btn-contact {
+        font-size: 0.95rem;
+    }
+
+
+
+}
