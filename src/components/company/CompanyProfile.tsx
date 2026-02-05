@@ -2,62 +2,77 @@
 
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
+import { createClient } from "next-sanity";
+import { useEffect, useState } from "react";
 
-type ProfileRow =
-  | { key: string; label: string; value: string }
-  | {
-      key: string;
-      label: string;
-      value: string;
-      link?: { href: string; text: string };
-    }
-  | { key: string; label: string; values: string[] };
+// 1. Sanity 클라이언트 설정
+const client = createClient({
+  projectId: "mbj14vcv",
+  dataset: "production",
+  apiVersion: "2024-02-04",
+  useCdn: false,
+});
 
-const PROFILE: ProfileRow[] = [
-  { key: "companyName", label: "会社名", value: "合同会社 J-BEAUTY" },
-  { key: "representative", label: "代表者", value: "鄭 柱洪" },
-  { key: "established", label: "設立", value: "令和1年5月15日" },
-  { key: "capital", label: "資本金", value: "500万円" },
-  { key: "tel", label: "電話番号", value: "03-6824-0395" },
-  {
-    key: "business",
-    label: "事業内容",
-    value:
-      "韓国コスメ・雑貨 / 食品輸入販売 / 卸売業 / イベントマーケティング / 広告",
-  },
-  {
-    key: "licenses",
-    label: "取得資格",
-    values: [
-      "1) 化粧品製造業許可証：13CZ201770",
-      "2) 化粧品製造販売業許可証：13C0X12361",
-    ],
-  },
-  {
-    key: "hq",
-    label: "本社",
-    value: "〒100-6001 東京都千代⽥区霞が関3-2-5 霞が関ビル5階",
-    link: {
-      href: "https://goo.gl/maps/example", // 실제 링크로 교체 필요
-      text: "Google Map",
-    },
-  },
-  {
-    key: "warehouse",
-    label: "倉庫",
-    value: "〒121-0836 東京都足立区入谷 2-22-14",
-    link: {
-      href: "https://goo.gl/maps/example",
-      text: "Google Map",
-    },
-  },
-];
+interface CompanyProfileData {
+  companyName: string;
+  representative: string;
+  established: string;
+  capital: string;
+  phone: string;
+  business: string;
+  licenses: string[];
+  hq: { address: string; mapLink: string };
+  warehouse: { address: string; mapLink: string };
+}
 
 export default function CompanyProfile() {
+const [profileData, setProfileData] = useState<CompanyProfileData | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // 2. 데이터 페칭 (GROQ 쿼리)
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const query = `*[_type == "profile"][0]`;
+        const data = await client.fetch(query);
+        setProfileData(data);
+      } catch (error) {
+        console.error("Sanity fetch error:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProfile();
+  }, []);
+
+  // 로딩 중일 때 null 대신 스켈레톤이나 빈 화면을 보여주어 섹션 레이아웃 유지
+  if (loading) return null; 
+
+  // 3. Sanity 데이터를 기존 UI 구조에 맞게 매핑 (데이터가 없을 경우를 대비해 옵셔널 체이닝 및 기본값 추가)
+// 3. Sanity 데이터를 실제 스키마 필드명에 맞게 매핑
+  const PROFILE_ROWS = [
+    { label: "会社名", value: profileData?.companyName || "-" },
+    { label: "代表者", value: profileData?.representative || "-" },
+    { label: "設立", value: profileData?.established || "-" },
+    { label: "資本金", value: profileData?.capital || "-" },
+    { label: "電話번호", value: profileData?.phone || "-" }, // tel -> phone
+    { label: "事業内容", value: profileData?.business || "-" },
+    { label: "取得資格", values: profileData?.licenses || [] },
+    { 
+      label: "本社", 
+      value: profileData?.hq?.address || "-", // hqAddress -> hq
+      link: profileData?.hq?.mapLink // mapUrl -> mapLink
+    },
+    { 
+      label: "倉庫", 
+      value: profileData?.warehouse?.address || "-", // warehouseAddress -> warehouse
+      link: profileData?.warehouse?.mapLink // mapUrl -> mapLink
+    },
+  ];
+
   return (
     <Section>
       <Inner>
-        {/* 1. 오른쪽: 헤더 영역 (Sticky) - 교차 배치를 위해 순서 변경 혹은 Flex로 제어 */}
         <HeaderSide>
           <motion.div
             initial={{ opacity: 0, x: 30 }}
@@ -68,11 +83,9 @@ export default function CompanyProfile() {
             <Label>INFORMATION</Label>
             <Title>COMPANY PROFILE</Title>
             <Description>
-              信頼と実績を積み重ね、
-              <br />
+              信頼と実績を積み重ね、<br />
               お客様と共に成長し続ける企業でありたい。
             </Description>
-            {/* 장식용 파스텔 오브젝트 */}
             <DecorCircle
               animate={{ scale: [1, 1.1, 1], rotate: [0, 5, 0] }}
               transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
@@ -80,19 +93,16 @@ export default function CompanyProfile() {
           </motion.div>
         </HeaderSide>
 
-        {/* 2. 왼쪽: 프로필 데이터 리스트 */}
         <ContentSide>
           <ProfileTable
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.1 }}
-            variants={{
-              show: { transition: { staggerChildren: 0.08 } },
-            }}
+            variants={{ show: { transition: { staggerChildren: 0.08 } } }}
           >
-            {PROFILE.map((row) => (
+            {PROFILE_ROWS.map((row, idx) => (
               <ProfileRow
-                key={row.key}
+                key={idx}
                 variants={{
                   hidden: { opacity: 0, y: 15 },
                   show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
@@ -101,23 +111,17 @@ export default function CompanyProfile() {
                 <div className="row_inner">
                   <dt className="label">{row.label}</dt>
                   <dd className="data">
-                    {"values" in row ? (
+                    {row.values ? (
                       <ul className="multi_list">
-                        {row.values.map((v) => (
-                          <li key={v}>{v}</li>
-                        ))}
+                        {row.values.map((v: string) => <li key={v}>{v}</li>)}
                       </ul>
                     ) : (
                       <div className="single_val">
                         <span>{row.value}</span>
-                        {"link" in row && row.link && (
-                          <MapLink
-                            href={row.link.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
+                        {row.link && (
+                          <MapLink href={row.link} target="_blank" rel="noopener noreferrer">
                             <span className="icon">📍</span>
-                            {row.link.text}
+                            Google Map
                           </MapLink>
                         )}
                       </div>
@@ -132,7 +136,6 @@ export default function CompanyProfile() {
     </Section>
   );
 }
-
 /* =========================
    Styles
 ========================= */
