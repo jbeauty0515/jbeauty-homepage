@@ -8,7 +8,7 @@ export default function BrandPage() {
       <Hero
         title="BRAND"
         subTitle="ブランドについて"
-        imageSrc="/assets/images/sub-visual-brand.jpg"
+        imageSrc="/assets/images/sub-visual-service.jpg"
         breadcrumbs={[
           { label: "Home", href: "/" },
           { label: "Brand", href: "/brand" },
