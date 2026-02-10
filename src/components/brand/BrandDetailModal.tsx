@@ -135,6 +135,7 @@ const Overlay = styled(motion.div)`
   align-items: center;
   justify-content: center;
   padding: 20px;
+  touch-action: none; /* ✅ */
 
   @media (max-width: 480px) {
     padding: 12px;
@@ -152,6 +153,15 @@ const Sheet = styled(motion.div)`
   flex-direction: column;
   overflow: hidden;
   border: 1px solid rgba(0, 0, 0, 0.05);
+
+  /* ✅ 스크롤을 Sheet가 담당 */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  @media (max-width: 480px) {
+    border-radius: 18px;
+    max-height: 92vh;
+  }
 `;
 
 const Header = styled.header`
@@ -160,6 +170,7 @@ const Header = styled.header`
   justify-content: space-between;
   align-items: flex-start;
   flex-shrink: 0;
+  gap: 12px;
 
   .titles {
     flex: 1;
@@ -172,6 +183,7 @@ const Header = styled.header`
     color: #64748b;
     margin-bottom: 4px;
     letter-spacing: 0.02em;
+    overflow-wrap: anywhere; /* ✅ */
   }
 
   .en {
@@ -179,36 +191,46 @@ const Header = styled.header`
     font-weight: 800;
     color: #0f172a;
     line-height: 1.1;
+    overflow-wrap: anywhere; /* ✅ */
+  }
+
+  @media (max-width: 768px) {
+    padding: 22px 20px;
+    .en {
+      font-size: 1.9rem;
+    }
   }
 
   @media (max-width: 480px) {
-    padding: 20px 24px;
+    padding: 18px 16px;
+    .ja {
+      font-size: 0.95rem;
+    }
     .en {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
     }
   }
 `;
 
 const Body = styled.div`
   flex: 1;
-  overflow-y: auto;
+  /* ✅ Body 스크롤 제거 */
+  overflow: visible;
+
   padding: 0 32px 32px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 36px;
 
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-  }
-
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
-    gap: 24px;
-    padding: 0 24px 24px;
+    gap: 20px;
+    padding: 0 20px 20px;
+  }
+
+  @media (max-width: 480px) {
+    gap: 16px;
+    padding: 0 16px 16px;
   }
 `;
 
@@ -219,6 +241,7 @@ const MediaContainer = styled.div`
 
   @media (max-width: 768px) {
     position: relative;
+    top: auto;
   }
 `;
 
@@ -228,6 +251,10 @@ const SquareImage = styled.img`
   object-fit: cover;
   border-radius: 20px;
   background: #f8fafc;
+
+  @media (max-width: 480px) {
+    border-radius: 16px;
+  }
 `;
 
 const ContentSection = styled.div`
@@ -241,18 +268,23 @@ const TextWrapper = styled.div`
   line-height: 1.75;
   color: #334155;
   margin-bottom: 40px;
+
+  /* ✅ 기본은 keep-all, 대신 긴 토큰은 끊을 수 있게 */
   word-break: keep-all;
+  overflow-wrap: anywhere;
 
   p {
     margin-bottom: 1.2em;
   }
+
   .empty {
     color: #94a3b8;
     font-style: italic;
   }
 
   @media (max-width: 480px) {
-    font-size: 1.05rem;
+    font-size: 1.02rem;
+    margin-bottom: 24px;
   }
 `;
 
@@ -262,6 +294,10 @@ const Footer = styled.footer`
   gap: 12px;
   margin-top: auto;
   flex-wrap: wrap;
+
+  @media (max-width: 480px) {
+    gap: 10px;
+  }
 `;
 
 const PrimaryLink = styled.a`
@@ -283,6 +319,29 @@ const PrimaryLink = styled.a`
     background: #1e293b;
     transform: translateY(-2px);
   }
+
+  @media (max-width: 480px) {
+    min-width: 100%;
+    height: 52px;
+  }
+`;
+
+const MutedChip = styled.div`
+  flex: 1;
+  height: 54px;
+  background: #f8fafc;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  font-weight: 600;
+
+  @media (max-width: 480px) {
+    flex: none;
+    width: 100%;
+    height: 52px;
+  }
 `;
 
 const SecondaryButton = styled.button`
@@ -301,7 +360,8 @@ const SecondaryButton = styled.button`
   }
 
   @media (max-width: 480px) {
-    flex: 1;
+    width: 100%;
+    height: 52px;
   }
 `;
 
@@ -331,16 +391,4 @@ const IconButton = styled.button`
 const ArrowIcon = styled.svg`
   width: 18px;
   height: 18px;
-`;
-
-const MutedChip = styled.div`
-  flex: 1;
-  height: 54px;
-  background: #f8fafc;
-  color: #94a3b8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 16px;
-  font-weight: 600;
 `;
