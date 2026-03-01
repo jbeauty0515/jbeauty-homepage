@@ -55,7 +55,7 @@ const [profileData, setProfileData] = useState<CompanyProfileData | null>(null);
     { label: "代表者", value: profileData?.representative || "-" },
     { label: "設立", value: profileData?.established || "-" },
     { label: "資本金", value: profileData?.capital || "-" },
-    { label: "電話번호", value: profileData?.phone || "-" }, // tel -> phone
+    { label: "電話", value: profileData?.phone || "-" }, // tel -> phone
     { label: "事業内容", value: profileData?.business || "-" },
     { label: "取得資格", values: profileData?.licenses || [] },
     { 
