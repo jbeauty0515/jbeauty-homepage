@@ -51,13 +51,14 @@ const [profileData, setProfileData] = useState<CompanyProfileData | null>(null);
   // 3. Sanity 데이터를 기존 UI 구조에 맞게 매핑 (데이터가 없을 경우를 대비해 옵셔널 체이닝 및 기본값 추가)
 // 3. Sanity 데이터를 실제 스키마 필드명에 맞게 매핑
   const PROFILE_ROWS = [
-    { label: "会社名", value: profileData?.companyName || "-" },
-    { label: "代表者", value: profileData?.representative || "-" },
-    { label: "設立", value: profileData?.established || "-" },
-    { label: "資本金", value: profileData?.capital || "-" },
-    { label: "電話", value: profileData?.phone || "-" }, // tel -> phone
-    { label: "事業内容", value: profileData?.business || "-" },
-    { label: "取得資格", values: profileData?.licenses || [] },
+    { label: "会社名 ", value: profileData?.companyName || "-" },
+    { label: "代表者 ", value: profileData?.representative || "-" },
+    { label: "設立 ", value: profileData?.established || "-" },
+    { label: "資本金 ", value: profileData?.capital || "-" },
+    { label: "電話番号 ", value: profileData?.phone || "-" }, // tel -> phone
+    { label: "FAX ", value: profileData?.fax || "-" },
+    { label: "事業内容 ", value: profileData?.business || "-" },
+    { label: "取得資格 ", values: profileData?.licenses || [] },
     { 
       label: "本社", 
       value: profileData?.hq?.address || "-", // hqAddress -> hq
