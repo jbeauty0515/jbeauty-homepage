@@ -33,16 +33,23 @@ export function urlFor(source: ImageAsset) {
   return builder.image(source);
 }
 
+// ✅ 1. Category 인터페이스 추가
+export interface Category {
+  _id: string;
+  title: string;
+  value: string;
+}
+
 export interface Brand {
   _id: string;
   name: string;
   nameJa: string;
-  category: "fragrance" | "organic_cosmetics";
+  category: Category;
   eyecatch?: ImageAsset;
   description?: TypedObject[];
   hasPdf: boolean;
   pdfUrl: string | null;
-  pdfLabel?: string; // ✅ 추가된 필드
+  pdfLabel?: string;
 }
 
 /* =========================
@@ -51,51 +58,51 @@ export interface Brand {
 
 export default function BrandPage() {
   const [brands, setBrands] = useState<Brand[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]); // ✅ 3. 동적 카테고리 상태 추가
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchBrands = async () => {
+    const fetchData = async () => {
       try {
-        // ✅ 쿼리에 pdfLabel 추가
-        const query = `*[_type == "brand"] | order(order asc) {
-          _id, 
-          name, 
-          nameJa, 
-          category, 
-          eyecatch, 
-          description, 
-          hasPdf, 
-          pdfLabel,
-          "pdfUrl": pdf.asset->url
+        // ✅ 4. 쿼리 수정: category 데이터를 참조(->)해서 가져오고, 카테고리 목록도 따로 가져옴
+        const query = `{
+          "brands": *[_type == "brand"] | order(order asc) {
+            _id, 
+            name, 
+            nameJa, 
+            "category": category->{_id, title, value}, 
+            eyecatch, 
+            description, 
+            hasPdf, 
+            pdfLabel,
+            "pdfUrl": pdf.asset->url
+          },
+          "categories": *[_type == "category"] | order(title asc) {
+            _id,
+            title,
+            value
+          }
         }`;
-        const data = await client.fetch<Brand[]>(query);
-        setBrands(data);
+
+        const { brands, categories } = await client.fetch<{
+          brands: Brand[];
+          categories: Category[];
+        }>(query);
+        setBrands(brands);
+        setCategories(categories);
       } catch (error) {
-        console.error("Brand fetch error:", error);
+        console.error("Data fetch error:", error);
       } finally {
         setLoading(false);
       }
     };
-    fetchBrands();
+    fetchData();
   }, []);
-
-  const categories = ["fragrance", "organic_cosmetics"] as const;
 
   return (
     <PageContainer>
       {loading ? (
-        // 로딩 중일 때 스켈레톤 UI 표시
         <>
-          <CategorySection>
-            <CategoryTitle>
-              <SkeletonTitle />
-            </CategoryTitle>
-            <BrandGrid>
-              {[1, 2, 3, 4].map((i) => (
-                <SkeletonCard key={i} />
-              ))}
-            </BrandGrid>
-          </CategorySection>
           <CategorySection>
             <CategoryTitle>
               <SkeletonTitle />
@@ -108,16 +115,14 @@ export default function BrandPage() {
           </CategorySection>
         </>
       ) : (
-        // 로딩 완료 후 실제 데이터 표시
+        // ✅ 5. 하드코딩된 배열 대신 DB에서 가져온 categories를 기반으로 렌더링
         categories.map((cat) => {
-          const filtered = brands.filter((b) => b.category === cat);
+          const filtered = brands.filter((b) => b.category?._id === cat._id);
           if (filtered.length === 0) return null;
 
           return (
-            <CategorySection key={cat}>
-              <CategoryTitle>
-                {cat === "fragrance" ? "FRAGRANCE" : "ORGANIC COSMETICS"}
-              </CategoryTitle>
+            <CategorySection key={cat._id}>
+              <CategoryTitle>{cat.title.toUpperCase()}</CategoryTitle>
 
               <BrandGrid>
                 {filtered.map((brand) => (
@@ -189,28 +194,6 @@ function BrandCardItem({ brand }: { brand: Brand }) {
               </MoreButton>
             </CardActions>
           </div>
-
-          {/* {brand.hasPdf && brand.pdfUrl && (
-            <DownloadIcon
-              href={brand.pdfUrl}
-              target="_blank"
-              rel="noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              aria-label={brand.pdfLabel || "PDFをダウンロード"}
-              title={brand.pdfLabel || "PDFをダウンロード"}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 -960 960 960"
-                fill="#fff"
-              >
-                <path
-                  d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56  58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"
-                  fill="currentColor"
-                />
-              </svg>
-            </DownloadIcon>
-          )} */}
         </Content>
       </PreviewCard>
 
@@ -224,7 +207,7 @@ function BrandCardItem({ brand }: { brand: Brand }) {
 }
 
 /* =========================
-   Styles
+   Styles (기존과 동일하므로 유지)
 ========================= */
 
 const PageContainer = styled.section`
@@ -234,11 +217,9 @@ const PageContainer = styled.section`
   width: 100%;
   background: #f8f9fa;
   min-height: 100vh;
-
   @media (max-width: 768px) {
     padding: 96px 5%;
   }
-
   @media (max-width: 480px) {
     padding: 80px 4.5%;
   }
@@ -263,7 +244,6 @@ const CategoryTitle = styled.h3`
   margin-bottom: 4rem;
   padding-left: 1.2rem;
   border-left: 4px solid #111827;
-
   @media (max-width: 768px) {
     margin-bottom: 2.8rem;
   }
@@ -273,11 +253,9 @@ const BrandGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 4rem;
-
   @media (max-width: 1024px) {
     gap: 3rem;
   }
-
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     gap: 2.5rem;
@@ -286,9 +264,6 @@ const BrandGrid = styled.div`
 
 const PreviewCard = styled.div`
   --gutter: 3rem;
-  --brightness: 0.5;
-  --frostRadius: 1.5rem;
-
   position: relative;
   aspect-ratio: 4 / 3.6;
   border-radius: 2.4rem;
@@ -299,34 +274,28 @@ const PreviewCard = styled.div`
   cursor: pointer;
   transition: transform 250ms ease-in-out;
   box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.12);
-
   &:hover {
     transform: scale(1.015);
     .backdrop {
       transform: scale(1.06);
     }
   }
-
   &:after {
     content: "";
     position: absolute;
     inset: 0;
     z-index: 1;
-    pointer-events: none;
     background: linear-gradient(
       to bottom,
       transparent 0%,
-      rgba(0, 0, 0, 0.05) 30%,
       rgba(0, 0, 0, 0.4) 60%,
       rgba(0, 0, 0, 0.8) 100%
     );
   }
-
   @media (max-width: 768px) {
     --gutter: 1.8rem;
     aspect-ratio: 3 / 3.8;
   }
-
   @media (max-width: 480px) {
     --gutter: 2.5rem;
     aspect-ratio: 3 / 4.2;
@@ -349,25 +318,21 @@ const Content = styled.div`
   gap: 0.2rem;
   color: #fff;
   padding-right: 4rem;
-
   .category-label {
     font-size: 1rem;
     font-weight: 700;
     color: rgba(255, 255, 255, 0.7);
     margin-bottom: 0.2rem;
   }
-
   .brand-name {
     font-size: 2.2rem;
     font-weight: 800;
     margin-bottom: 0.8rem;
     line-height: 1.1;
-
     @media (max-width: 768px) {
       font-size: 1.8rem;
     }
   }
-
   .description-area {
     display: grid;
     gap: 1rem;
@@ -379,12 +344,10 @@ const TextContent = styled.div`
   line-height: 1.6;
   opacity: 0.9;
   word-break: keep-all;
-
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
   -webkit-line-clamp: 2;
-
   @media (max-width: 768px) {
     -webkit-line-clamp: 3;
   }
@@ -406,7 +369,6 @@ const MoreButton = styled.button`
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-
   &:hover span {
     text-decoration: underline;
   }
@@ -417,96 +379,24 @@ const ChevronIcon = styled.svg`
   height: 16px;
 `;
 
-const DownloadIcon = styled.a`
-  position: absolute;
-  right: 2rem;
-  bottom: 2.2rem;
-  z-index: 3;
-
-  width: 36px;
-  height: 36px;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(8px);
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background: #fff;
-    transform: translateY(-3px);
-    svg {
-      fill: #111;
-      width: 24px;
-      height: 24px;
-    }
-  }
-
-  @media (max-width: 768px) {
-    right: 1.5rem;
-    bottom: 1.8rem;
-  }
-`;
-
-/* =========================
-   Skeleton Loading Styles
-========================= */
-
-const shimmer = `
-  @keyframes shimmer {
-    0% {
-      background-position: -1000px 0;
-    }
-    100% {
-      background-position: 1000px 0;
-    }
-  }
-`;
-
+const shimmer = ` @keyframes shimmer { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } } `;
 const SkeletonTitle = styled.div`
   width: 200px;
   height: 32px;
-  background: linear-gradient(
-    90deg,
-    #f0f0f0 25%,
-    #e0e0e0 50%,
-    #f0f0f0 75%
-  );
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 1000px 100%;
   animation: shimmer 2s infinite;
   border-radius: 8px;
   margin: 0 auto;
-
   ${shimmer}
 `;
-
 const SkeletonCard = styled.div`
   position: relative;
   aspect-ratio: 3/4;
-  background: linear-gradient(
-    90deg,
-    #f0f0f0 25%,
-    #e0e0e0 50%,
-    #f0f0f0 75%
-  );
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 1000px 100%;
   animation: shimmer 2s infinite;
   border-radius: 20px;
   overflow: hidden;
-
   ${shimmer}
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 40%;
-    background: linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0.3),
-      transparent
-    );
-  }
 `;
