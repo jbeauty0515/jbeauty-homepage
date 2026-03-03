@@ -31,7 +31,7 @@ export default function Footer() {
             </FooterLogo>
             <BrandDesc>
               日常に特別な価値を添える、感性豊かなキュレーション。<br />
-              J-BEAUTYは、あなたの美しい暮らしに寄り添います.
+              J-BEAUTYは、あなたの美しい暮らしに寄り添います. 
             </BrandDesc>
           </BrandSide>
 
@@ -56,8 +56,8 @@ export default function Footer() {
 
         <FooterBottom>
           <InfoArea>
-            <p className="address">〒100-6001 東京都千代田区霞が関3-2-5 霞が関ビル5F</p>
-            <p className="tel">TEL. 03-6824-0395</p>
+            <p className="address">〒100-6001 東京都千代田区霞が関3-2-5 霞が関ビル5F 01</p>
+            <p className="tel">TEL. 03-6824-0395</p> 
           </InfoArea>
           <FooterCopy>© {currentYear} J-beauty. All Rights Reserved.</FooterCopy>
         </FooterBottom>
