@@ -23,13 +23,15 @@ interface CompanyProfileData {
   licenses: string[];
   hq: { address: string; mapLink: string };
   warehouse: { address: string; mapLink: string };
+  fax: string;
 }
 
 export default function CompanyProfile() {
-const [profileData, setProfileData] = useState<CompanyProfileData | null>(null);
+  const [profileData, setProfileData] = useState<CompanyProfileData | null>(
+    null
+  );
   const [loading, setLoading] = useState(true);
 
-  // 2. 데이터 페칭 (GROQ 쿼리)
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -45,29 +47,26 @@ const [profileData, setProfileData] = useState<CompanyProfileData | null>(null);
     fetchProfile();
   }, []);
 
-  // 로딩 중일 때 null 대신 스켈레톤이나 빈 화면을 보여주어 섹션 레이아웃 유지
-  if (loading) return null; 
+  if (loading) return null;
 
-  // 3. Sanity 데이터를 기존 UI 구조에 맞게 매핑 (데이터가 없을 경우를 대비해 옵셔널 체이닝 및 기본값 추가)
-// 3. Sanity 데이터를 실제 스키마 필드명에 맞게 매핑
   const PROFILE_ROWS = [
     { label: "会社名 ", value: profileData?.companyName || "-" },
     { label: "代表者 ", value: profileData?.representative || "-" },
     { label: "設立 ", value: profileData?.established || "-" },
     { label: "資本金 ", value: profileData?.capital || "-" },
-    { label: "電話番号 ", value: profileData?.phone || "-" }, // tel -> phone
+    { label: "電話番号 ", value: profileData?.phone || "-" },
     { label: "FAX ", value: profileData?.fax || "-" },
     { label: "事業内容 ", value: profileData?.business || "-" },
     { label: "取得資格 ", values: profileData?.licenses || [] },
-    { 
-      label: "本社", 
-      value: profileData?.hq?.address || "-", // hqAddress -> hq
-      link: profileData?.hq?.mapLink // mapUrl -> mapLink
+    {
+      label: "本社",
+      value: profileData?.hq?.address || "-",
+      link: profileData?.hq?.mapLink,
     },
-    { 
-      label: "倉庫", 
-      value: profileData?.warehouse?.address || "-", // warehouseAddress -> warehouse
-      link: profileData?.warehouse?.mapLink // mapUrl -> mapLink
+    {
+      label: "倉庫",
+      value: profileData?.warehouse?.address || "-",
+      link: profileData?.warehouse?.mapLink,
     },
   ];
 
@@ -84,7 +83,8 @@ const [profileData, setProfileData] = useState<CompanyProfileData | null>(null);
             <Label>INFORMATION</Label>
             <Title>COMPANY PROFILE</Title>
             <Description>
-              信頼と実績を積み重ね、<br />
+              信頼と実績を積み重ね、
+              <br />
               お客様と共に成長し続ける企業でありたい。
             </Description>
             <DecorCircle
@@ -114,13 +114,19 @@ const [profileData, setProfileData] = useState<CompanyProfileData | null>(null);
                   <dd className="data">
                     {row.values ? (
                       <ul className="multi_list">
-                        {row.values.map((v: string) => <li key={v}>{v}</li>)}
+                        {row.values.map((v: string) => (
+                          <li key={v}>{v}</li>
+                        ))}
                       </ul>
                     ) : (
                       <div className="single_val">
                         <span>{row.value}</span>
                         {row.link && (
-                          <MapLink href={row.link} target="_blank" rel="noopener noreferrer">
+                          <MapLink
+                            href={row.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
                             <span className="icon">📍</span>
                             Google Map
                           </MapLink>
