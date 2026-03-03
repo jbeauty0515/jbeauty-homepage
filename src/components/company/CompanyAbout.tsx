@@ -14,7 +14,7 @@ const SERVICES = [
       "SNS / ECデータ調査",
       "現地ブランド連携と選定",
     ],
-    color: "#FFF0F3", // 미스티 로즈
+    color: "#FFF0F3", 
     darkColor: "#E5989B",
   },
   {
