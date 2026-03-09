@@ -10,7 +10,7 @@ export default function CompanyPage() {
       <Hero
         title="COMPANY"
         subTitle="会社について"
-        imageSrc="/assets/images/sub-visual-company.jpeg"
+        imageSrc="/assets/images/sub-visual-company.jpg"
         breadcrumbs={[
           { label: "Home", href: "/" },
           { label: "Company", href: "/company" },

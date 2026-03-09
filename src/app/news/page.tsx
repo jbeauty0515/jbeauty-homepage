@@ -47,7 +47,7 @@ export default function NewsListPage() {
       <Hero
         title="NEWS"
         subTitle="ニュース"
-        imageSrc="/assets/images/sub-visual-news.avif"
+        imageSrc="/assets/images/sub-visual-news.jpg"
         breadcrumbs={[
           { label: "Home", href: "/" },
           { label: "News", href: "/news" },
