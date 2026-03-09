@@ -165,9 +165,9 @@ const GradientOverlay = styled.div`
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    180deg,
+    190deg,
     rgba(10, 15, 30, 0.4) 0%,
-    rgba(5, 10, 20, 0.7) 60%,
+    rgba(11, 18, 32, 0.7) 60%,
     rgba(0, 0, 0, 0.9) 100%
   );
 `;
