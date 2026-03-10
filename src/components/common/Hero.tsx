@@ -10,6 +10,7 @@ interface CorporateHeroProps {
   subTitle: string;
   imageSrc: string;
   breadcrumbs: { label: string; href: string }[];
+  imagePosition?: "top" | "bottom" | "center";
 }
 
 export default function Hero({
@@ -17,6 +18,7 @@ export default function Hero({
   subTitle,
   imageSrc,
   breadcrumbs,
+  imagePosition = "center",
 }: CorporateHeroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -25,7 +27,11 @@ export default function Hero({
       <HeroContainer ref={containerRef}>
         {/* 1. 배경 레이어 그룹 */}
         <BgLayer>
-          <BgImage src={imageSrc} alt="Background" />
+          <BgImage
+            src={imageSrc}
+            alt="Background"
+            imagePosition={imagePosition}
+          />
           <GradientOverlay />
           <GridPattern />
           <NoiseTexture />
@@ -155,12 +161,13 @@ const BgLayer = styled(motion.div)`
   z-index: 0;
 `;
 
-const BgImage = styled.img`
+/* --- 기존 코드 --- */
+const BgImage = styled.img<{ imagePosition: "top" | "bottom" | "center" }>`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: ${({ imagePosition }) => imagePosition};
 `;
-
 const GradientOverlay = styled.div`
   position: absolute;
   inset: 0;
