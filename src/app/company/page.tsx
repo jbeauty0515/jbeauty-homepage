@@ -15,7 +15,6 @@ export default function CompanyPage() {
           { label: "Home", href: "/" },
           { label: "Company", href: "/company" },
         ]}
-        imagePosition="bottom"
       />
       <CompanyAbout />
       <CompanyProfile />
