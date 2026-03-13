@@ -50,21 +50,21 @@ export default function CompanyProfile() {
   if (loading) return null;
 
   const PROFILE_ROWS = [
-    { label: "会社名 ", value: profileData?.companyName || "-" },
-    { label: "代表者 ", value: profileData?.representative || "-" },
-    { label: "設立 ", value: profileData?.established || "-" },
-    { label: "資本金 ", value: profileData?.capital || "-" },
-    { label: "電話番号 ", value: profileData?.phone || "-" },
-    { label: "FAX ", value: profileData?.fax || "-" },
-    { label: "事業内容 ", value: profileData?.business || "-" },
-    { label: "取得資格 ", values: profileData?.licenses || [] },
+    { label: "会社名　", value: profileData?.companyName || "-" },
+    { label: "代表者　", value: profileData?.representative || "-" },
+    { label: "設立　", value: profileData?.established || "-" },
+    { label: "資本金　", value: profileData?.capital || "-" },
+    { label: "電話番号　", value: profileData?.phone || "-" },
+    { label: "FAX　", value: profileData?.fax || "-" },
+    { label: "事業内容　", value: profileData?.business || "-" },
+    { label: "取得資格　", values: profileData?.licenses || [] },
     {
-      label: "本社",
+      label: "本社　",
       value: profileData?.hq?.address || "-",
       link: profileData?.hq?.mapLink,
     },
     {
-      label: "倉庫",
+      label: "倉庫　",
       value: profileData?.warehouse?.address || "-",
       link: profileData?.warehouse?.mapLink,
     },
