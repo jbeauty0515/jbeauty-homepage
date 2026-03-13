@@ -276,7 +276,6 @@ export default function ContactPage() {
     </PageWrapper>
   );
 }
-
 const PageWrapper = styled.section`
   padding: 140px 5%;
   background: #fcfcfc;
@@ -311,6 +310,7 @@ const FormContainer = styled(motion.form)`
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
   display: grid;
   gap: 30px;
+  box-sizing: border-box; /* 패딩 포함 너비 계산 */
   @media (max-width: 768px) {
     padding: 30px 20px;
   }
@@ -320,6 +320,7 @@ const FormLabel = styled.label`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 100%; /* 너비 고정 */
 `;
 
 const LabelText = styled.span`
@@ -338,6 +339,8 @@ const LabelText = styled.span`
 `;
 
 const commonInput = `
+  width: 100%; /* 부모 너비를 넘지 않게 설정 */
+  box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
   padding: 16px;
   border-radius: 12px;
   border: 1px solid #e2e8f0;
@@ -354,30 +357,32 @@ const Input = styled.input`
   ${commonInput}
 `;
 
-/* ✅ Select 스타일 수정: 아이콘 위치 제어 */
 const Select = styled.select`
   ${commonInput}
-  appearance: none; /* 브라우저 기본 화살표 제거 */
+  appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23666'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 16px center; /* 아이콘을 오른쪽에서 16px 띄움 */
+  background-position: right 16px center;
   background-size: 16px;
-  padding-right: 48px; /* 글자가 아이콘과 겹치지 않도록 충분한 우측 여백 확보 */
+  padding-right: 48px;
   cursor: pointer;
 
   &::-ms-expand {
-    display: none; /* IE 대응 */
+    display: none;
   }
 `;
 
 const TextArea = styled.textarea`
-  ${commonInput} resize: none;
+  ${commonInput}
+  resize: none;
 `;
 
 const TwoColumn = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
   @media (max-width: 600px) {
     grid-template-columns: 1fr;
   }
@@ -388,6 +393,8 @@ const AgreeBox = styled.div`
   padding: 24px;
   border-radius: 16px;
   text-align: center;
+  width: 100%;
+  box-sizing: border-box;
   p {
     font-size: 0.85rem;
     color: #64748b;
