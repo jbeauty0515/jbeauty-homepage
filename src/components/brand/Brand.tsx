@@ -108,7 +108,7 @@ export default function BrandPage() {
               <SkeletonTitle />
             </CategoryTitle>
             <BrandGrid>
-              {[1, 2, 3, 4].map((i) => (
+              {[1, 2, 3, 4, 5, 6].map((i) => (
                 <SkeletonCard key={i} />
               ))}
             </BrandGrid>
@@ -251,14 +251,15 @@ const CategoryTitle = styled.h3`
 
 const BrandGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 4rem;
-  @media (max-width: 1024px) {
-    gap: 3rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2.75rem;
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.5rem;
   }
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
-    gap: 2.5rem;
+    gap: 2.25rem;
   }
 `;
 
