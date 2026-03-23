@@ -1,9 +1,34 @@
 "use client";
 
 import styled from "@emotion/styled";
+import { createImageUrlBuilder } from "@sanity/image-url";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { createClient } from "next-sanity";
 import { useEffect, useState } from "react";
+
+const client = createClient({
+  projectId: "mbj14vcv",
+  dataset: "production",
+  apiVersion: "2026-02-04",
+  useCdn: false,
+});
+
+const builder = createImageUrlBuilder(client);
+
+type ImageAsset = {
+  _type: "image";
+  asset: {
+    _ref: string;
+    _type: "reference";
+  };
+};
+
+type BrandPreview = {
+  _id: string;
+  name: string;
+  eyecatch?: ImageAsset;
+};
 
 type Feature = {
   eyebrow: string;
@@ -14,6 +39,14 @@ type Feature = {
   reverse?: boolean;
   isAccordion?: boolean;
 };
+
+const DEFAULT_BRAND_IMAGES = [
+  "/assets/images/ohscent-product.jpg",
+  "/assets/images/factory_normal.jpg",
+  "/assets/images/jejujoah.jpg",
+  "/assets/images/formulier.jpg",
+  "/assets/images/chwi.jpg",
+];
 
 const FEATURES: Feature[] = [
   {
@@ -31,13 +64,7 @@ const FEATURES: Feature[] = [
     title: "Brand",
     desc: `香りと暮らしに寄り添う、感性と品質に優れたブランドを厳選。\n日常を豊かに彩る、信頼とトレンドを兼ね備えたアイテムをご紹介します。`,
     href: "/brand",
-    images: [
-      "/assets/images/ohscent-product.jpg",
-      "/assets/images/factory_normal.jpg",
-      "/assets/images/jejujoah.jpg",
-      "/assets/images/formulier.jpg",
-      "/assets/images/chwi.jpg",
-    ],
+    images: DEFAULT_BRAND_IMAGES,
     reverse: true,
     isAccordion: true,
   },
@@ -45,16 +72,62 @@ const FEATURES: Feature[] = [
 
 export default function HomeFeatureSections() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [brandImages, setBrandImages] = useState<string[]>(DEFAULT_BRAND_IMAGES);
   const [isPaused, setIsPaused] = useState(false);
+  const accordionImages = brandImages.length > 0 ? brandImages : DEFAULT_BRAND_IMAGES;
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const fetchBrandImages = async () => {
+      try {
+        const data = await client.fetch<BrandPreview[]>(
+          `*[_type == "brand" && defined(eyecatch.asset)] | order(_updatedAt desc, _createdAt desc)[0...5]{
+            _id,
+            name,
+            eyecatch
+          }`
+        );
+
+        if (cancelled) return;
+
+        const latestImages = data
+          .filter(
+            (brand): brand is BrandPreview & { eyecatch: ImageAsset } =>
+              Boolean(brand.eyecatch)
+          )
+          .map((brand) =>
+            builder.image(brand.eyecatch).width(720).height(920).fit("crop").url()
+          );
+
+        if (latestImages.length > 0) {
+          setBrandImages(latestImages);
+        }
+      } catch (error) {
+        console.error("Failed to fetch brand previews:", error);
+      }
+    };
+
+    fetchBrandImages();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   // 자동 롤링 로직
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || accordionImages.length <= 1) return;
     const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % FEATURES[1].images.length);
+      setActiveIndex((prev) => (prev + 1) % accordionImages.length);
     }, 3500);
     return () => clearInterval(interval);
-  }, [isPaused]);
+  }, [accordionImages.length, isPaused]);
+
+  useEffect(() => {
+    if (activeIndex < accordionImages.length) return;
+    setActiveIndex(0);
+  }, [accordionImages.length, activeIndex]);
 
   // 애니메이션 Variants
   const textVariants = {
@@ -84,7 +157,7 @@ export default function HomeFeatureSections() {
                   onMouseEnter={() => setIsPaused(true)} 
                   onMouseLeave={() => setIsPaused(false)}
                 >
-                  {f.images.map((img, idx) => (
+                  {accordionImages.map((img, idx) => (
                     <AccordionItem
                       key={idx}
                       animate={{ flex: activeIndex === idx ? 3.5 : 0.6 }}
@@ -93,7 +166,7 @@ export default function HomeFeatureSections() {
                     >
                       <motion.img 
                         src={img} 
-                        alt="" 
+                        alt={`${f.title} preview ${idx + 1}`} 
                         layout // 이미지 크기 변화를 부드럽게
                       />
                       <OverlayLabel 

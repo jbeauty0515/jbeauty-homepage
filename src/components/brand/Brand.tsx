@@ -3,7 +3,7 @@
 import styled from "@emotion/styled";
 import { PortableText } from "@portabletext/react";
 import type { TypedObject } from "@portabletext/types";
-import imageUrlBuilder from "@sanity/image-url";
+import { createImageUrlBuilder } from "@sanity/image-url";
 import { createClient } from "next-sanity";
 import { useEffect, useState } from "react";
 import BrandDetailModal from "./BrandDetailModal";
@@ -19,7 +19,7 @@ const client = createClient({
   useCdn: false,
 });
 
-const builder = imageUrlBuilder(client);
+const builder = createImageUrlBuilder(client);
 
 interface ImageAsset {
   _type: "image";
