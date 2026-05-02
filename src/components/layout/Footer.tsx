@@ -56,7 +56,7 @@ export default function Footer() {
 
         <FooterBottom>
           <InfoArea>
-            <p className="address">〒102-0072 東京都千代田区飯田橋1-7-10 山京ビル205  test</p>
+            <p className="address">〒102-0072 東京都千代田区飯田橋1-7-10 山京ビル205</p>
             <p className="tel">TEL. 03-6824-0395</p> 
           </InfoArea>
           <FooterCopy>© {currentYear} J-beauty. All Rights Reserved.</FooterCopy>
